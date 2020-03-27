@@ -8,8 +8,4 @@ public class RSClass {
 
     protected RSClass() {
     }
-
-    public RSClass(Object reference) {
-        this.reference = reference;
-    }
 }

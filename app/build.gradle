@@ -27,6 +27,59 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+
+    //apktool has some java awt deps but not needed for our uses.
+    lintOptions {
+        abortOnError false
+    }
+
+    task decodeOsiris(type: JavaExec) {
+        classpath = files('./apktool_2.4.1.jar')
+        main = 'brut.apktool.Main'
+        args 'd','-f','./build/outputs/apk/debug/app-debug.apk'
+    }
+
+    task decodeOSRS(type: JavaExec) {
+        classpath = files('./apktool_2.4.1.jar')
+        main = 'brut.apktool.Main'
+        args 'd','-f','./osrs_189.1.apk'
+    }
+
+    task patchOSRS(type: Copy) {
+        from file("./app-debug/smali_classes2/com/osiris/")
+        into file("./osrs_189.1/smali/com/osiris/")
+    }
+
+    task replaceManifest(type: Copy) {
+        from file("./AndroidManifest.xml")
+        into file("./osrs_189.1/")
+    }
+
+    task assembleOsiris(type: JavaExec) {
+        classpath = files('./apktool_2.4.1.jar')
+        main = 'brut.apktool.Main'
+        args 'b','-f','./osrs_189.1/'
+    }
+
+    task deleteOldDebug(type: Delete) {
+        delete file("./build/outputs/apk/debug/app-debug.apk")
+    }
+
+    task testSignAPK(type: JavaExec) {
+        classpath = files('./signapk-1.0.jar')
+        main = 'orig.SignApk'
+        args 'testkey.x509.pem','testkey.pk8','./osrs_189.1/dist/osrs_189.1.apk','./build/outputs/apk/debug/app-debug.apk'
+    }
+
+    afterEvaluate {
+        decodeOSRS.dependsOn decodeOsiris
+        patchOSRS.dependsOn decodeOSRS
+        replaceManifest.dependsOn patchOSRS
+        assembleOsiris.dependsOn replaceManifest
+        deleteOldDebug.dependsOn assembleOsiris
+        testSignAPK.dependsOn deleteOldDebug
+        assembleDebug.dependsOn testSignAPK
+    }
 }
 
 dependencies {

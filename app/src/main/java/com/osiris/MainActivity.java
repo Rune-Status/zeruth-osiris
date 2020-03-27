@@ -13,6 +13,9 @@ import com.osiris.api.Statics;
 
 /*
     This class handles loading OSRS as well as initializing any of our added features.
+
+    Keep all mobile required classes in the com.osiris package, as the patcher will only
+    move that package to osrs mobile.
  */
 public class MainActivity extends Activity {
 

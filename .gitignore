@@ -12,3 +12,5 @@
 /captures
 .externalNativeBuild
 .cxx
+/app/app-debug
+/app/osrs_189.1
