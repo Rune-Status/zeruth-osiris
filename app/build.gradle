@@ -72,6 +72,7 @@ android {
     }
 
     afterEvaluate {
+        decodeOsiris.dependsOn packageDebug
         decodeOSRS.dependsOn decodeOsiris
         patchOSRS.dependsOn decodeOSRS
         replaceManifest.dependsOn patchOSRS
@@ -85,5 +86,4 @@ android {
 dependencies {
 
     testImplementation 'junit:junit:4.13'
-    api files('osrs_m_189.1-enjarify.jar')
 }
