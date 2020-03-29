@@ -23,7 +23,7 @@ Current functionality:
 
 OSiris relies on the following tools, much love to the developers of them!
 
-[Apktool] - APK decoding / encoding AIO
+[Apktool] - APK decoding / encoding AIO  
 [Apk Sign] - APK signing
 
    [Apktool]: <https://ibotpeaches.github.io/Apktool/>
