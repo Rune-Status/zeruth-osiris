@@ -1,5 +1,5 @@
 # OSiris
-OSiris is a reflection toolkit for Android applications
+A reflection toolkit for Android applications
 
   - Automated patching after building
   - Installs to phone through USB after build
