@@ -8,7 +8,7 @@ A reflection toolkit for Android applications
 # How to use
 
   - Download Android studio if required from https://developer.android.com/studio
-  - In the SDK manager, download API 23 and 29
+  - In the SDK manager, install whichever api reflects your phones Android level
   - Import the project like you would any other project
   - Place the latest OSRS apk under app/osrs.apk
   - To run from your phone, you must setup USB Debugging on your phone in Developer Settings
