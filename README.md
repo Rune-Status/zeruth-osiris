@@ -8,7 +8,7 @@ A reflection toolkit for Android applications
 # How to use
 
   - Download Android studio if required from https://developer.android.com/studio
-  - In the SDK manager, install whichever api reflects your phones Android level
+  - In the SDK manager, install whichever api reflects your phones Android version
   - Import the project like you would any other project
   - Place the latest OSRS apk under app/osrs.apk
   - To run from your phone, you must setup USB Debugging on your phone in Developer Settings
@@ -16,7 +16,7 @@ A reflection toolkit for Android applications
 
 
 Current functionality:
-  - This is a framework, and has only proof of concept functionality
+  - This is a framework with almost no functionality, but can be easily modified to work on any android app
   - LocalPlayer is fetched, then the Display Name, and is printed every 5000ms to the error log
 
 ### Libraries
