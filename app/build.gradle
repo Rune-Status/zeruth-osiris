@@ -34,29 +34,29 @@ android {
     }
 
     task decodeOsiris(type: JavaExec) {
-        classpath = files('./apktool_2.4.1.jar')
+        classpath = files('./lib/apktool_2.4.1.jar')
         main = 'brut.apktool.Main'
         args 'd','-f','./build/outputs/apk/debug/app-debug.apk'
     }
 
     task decodeOSRS(type: JavaExec) {
-        classpath = files('./apktool_2.4.1.jar')
+        classpath = files('./lib/apktool_2.4.1.jar')
         main = 'brut.apktool.Main'
-        args 'd','-f','./osrs.apk'
+        args 'd','-f','./lib/osrs.apk'
     }
 
     task patchOSRS(type: Copy) {
-        from file("./app-debug/smali_classes2/com/osiris/")
+        from file("./app-debug/smali/com/osiris/")
         into file("./osrs/smali/com/osiris/")
     }
 
     task replaceManifest(type: Copy) {
-        from file("./AndroidManifest.xml")
+        from file("./patches/")
         into file("./osrs/")
     }
 
     task assembleOsiris(type: JavaExec) {
-        classpath = files('./apktool_2.4.1.jar')
+        classpath = files('./lib/apktool_2.4.1.jar')
         main = 'brut.apktool.Main'
         args 'b','-f','./osrs/'
     }
@@ -66,9 +66,9 @@ android {
     }
 
     task testSignAPK(type: JavaExec) {
-        classpath = files('./signapk-1.0.jar')
+        classpath = files('./lib/signapk-1.0.jar')
         main = 'orig.SignApk'
-        args 'testkey.x509.pem','testkey.pk8','./osrs/dist/osrs.apk','./build/outputs/apk/debug/app-debug.apk'
+        args './lib/testkey.x509.pem','./lib/testkey.pk8','./osrs/dist/osrs.apk','./build/outputs/apk/debug/app-debug.apk'
     }
 
     afterEvaluate {
@@ -80,6 +80,9 @@ android {
         deleteOldDebug.dependsOn assembleOsiris
         testSignAPK.dependsOn deleteOldDebug
         assembleDebug.dependsOn testSignAPK
+
+        installDebug.dependsOn assembleDebug
+        uninstallDebug.dependsOn assembleDebug
     }
 }
 
