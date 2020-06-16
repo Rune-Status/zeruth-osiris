@@ -27,14 +27,14 @@ public class Statics extends RSClass {
 
     public Statics() {
         try {
-            rsClass = Class.forName("ie");
+            rsClass = Class.forName("ju");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public Player getLocalPlayer() {
-        localPlayer = new RSField(this, "jp", rsClass);
+        localPlayer = new RSField(this, "jr", rsClass);
         Player localPlayer = new Player();
         localPlayer.reference = this.localPlayer.getValue();
         return localPlayer;

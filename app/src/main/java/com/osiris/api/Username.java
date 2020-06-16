@@ -28,21 +28,21 @@ public class Username extends RSClass {
 
     Username() {
         try {
-            rsClass = Class.forName("eo");
+            rsClass = Class.forName("ev");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public String getName1() {
-        name1 = new RSField(this, "aj", reference);
+    public String getCleanName() {
+        name1 = new RSField(this, "ag", reference);
         if (name1.getValue() != null)
             return (String) name1.getValue();
         return null;
     }
 
-    public String getName2() {
-        name2 = new RSField(this, "ax", reference);
+    public String getName() {
+        name2 = new RSField(this, "ar", reference);
         if (name2.getValue() != null)
             return (String) name2.getValue();
         return null;

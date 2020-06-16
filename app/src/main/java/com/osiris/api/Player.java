@@ -27,14 +27,14 @@ public class Player extends RSClass {
 
     Player() {
         try {
-            rsClass = Class.forName("hm");
+            rsClass = Class.forName("hu");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public Username getUsername() {
-        username = new RSField(this, "aj", this.reference);
+        username = new RSField(this, "ar", this.reference);
         Username username = new Username();
         username.reference = this.username.getValue();
         return username;

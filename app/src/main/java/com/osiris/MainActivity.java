@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
 
         client = new Client();
 
-        Log.d(this.getClass().getName(), "Starting debug thread (5000ms tick)");
         Thread debug = new Thread(() -> {
+            Log.d(this.getClass().getName(), "Starting debug thread (5000ms tick)");
             while (true) {
                 try {
                     String username;
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
                         if (localPlayer.getUsername().reference == null) {
                             username = "Username Null";
                         } else {
-                            username = localPlayer.getUsername().getName1();
+                            username = localPlayer.getUsername().getName();
                         }
                     }
 
@@ -81,6 +81,9 @@ public class MainActivity extends Activity {
             }
         });
 
+        boolean debugReflection = true;
+
+        if (debugReflection)
         debug.start();
 
         Toast.makeText(this,
