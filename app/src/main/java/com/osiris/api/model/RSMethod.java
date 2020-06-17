@@ -17,33 +17,42 @@ LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR P
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.osiris.api;
+package com.osiris.api.model;
 
-import com.osiris.api.model.RSClass;
-import com.osiris.api.model.RSField;
+import android.util.Log;
 
-public class Player extends RSClass {
-    private RSField username;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
-    Player() {
+public class RSMethod {
+
+    private RSClass parentClass;
+    public Method method;
+    public Object reference;
+
+    public RSMethod(RSClass parentClass, String method, Object reference) {
         try {
-            rsClass = Class.forName("hu");
-        } catch (ClassNotFoundException e) {
+            this.parentClass = parentClass;
+            this.method = ((Class)(parentClass.rsClass)).getDeclaredMethod(method, (Class)(parentClass.rsClass));
+            this.reference = reference;
+            for (Method m : ((Class)(parentClass.rsClass)).getDeclaredMethods())
+            {
+                Log.e("methods", m.getName());
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
-    }
-
-    public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
+    public Object getValue() {
+        try {
+            method.setAccessible(true);
+            Object value = method.invoke(reference);
+            method.setAccessible(false);
+            return value;
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to access Class:" + parentClass.className + " Method:" + method.getName());
+        }
     }
 }

@@ -19,31 +19,34 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.osiris.api;
 
+import android.util.Log;
+
 import com.osiris.api.model.RSClass;
 import com.osiris.api.model.RSField;
 
-public class Player extends RSClass {
-    private RSField username;
+public class GameObject extends RSClass {
+    private RSField entity;
+    private RSField id;
 
-    Player() {
+    GameObject() {
         try {
-            rsClass = Class.forName("hu");
+            rsClass = Class.forName("cc");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
+    public Entity getEntity() {
+        entity = new RSField(this, "ak", this.reference);
+        Entity entity = new Entity();
+        entity.reference = this.entity.getValue();
+        return entity;
     }
 
-    public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
+    public int getID() {
+        id = new RSField(this, "au", this.reference);
+        long l = (long) id.getValue();
+        l *= 3025607549129563907L;
+        return (int)(l >>> 17 & 0xFFFFFFFFL);
     }
 }

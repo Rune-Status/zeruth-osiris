@@ -19,31 +19,44 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.osiris.api;
 
+import android.util.Log;
+
 import com.osiris.api.model.RSClass;
 import com.osiris.api.model.RSField;
 
-public class Player extends RSClass {
-    private RSField username;
+import java.util.ArrayList;
 
-    Player() {
+public class Scene extends RSClass {
+    private RSField tilesCacheField;
+    Object[][][] rsTiles;
+
+    Scene() {
         try {
-            rsClass = Class.forName("hu");
+            rsClass = Class.forName("bn");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
-    }
+    public ArrayList<Tile> getTiles() {
+        tilesCacheField = new RSField(this, "ac", this.reference);
+        ArrayList<Tile> tiles = new ArrayList<>();
+        int REGION_SIZE = 104;
+        rsTiles = (Object[][][]) tilesCacheField.getValue();
+        int z = Client.localPlayer.getPlane();
 
-    public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
+        for (int x = 0; x < REGION_SIZE; ++x) {
+            for (int y = 0; y < REGION_SIZE; ++y) {
+                 Object tile = this.rsTiles[z][x][y];
+                if (tile == null) {
+                    continue;
+                }
+                Tile tempTile = new Tile();
+                tempTile.reference = tile;
+                tiles.add(tempTile);
+            }
+        }
+
+        return tiles;
     }
 }

@@ -22,28 +22,57 @@ package com.osiris.api;
 import com.osiris.api.model.RSClass;
 import com.osiris.api.model.RSField;
 
-public class Player extends RSClass {
-    private RSField username;
+public class Tile extends RSClass {
+    private RSField gameObjectsField;
+    private RSField xField;
+    private RSField yField;
+    private RSField planeField;
 
-    Player() {
+    Tile() {
         try {
-            rsClass = Class.forName("hu");
+            rsClass = Class.forName("bq");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
+    public GameObject[] getGameObjects() {
+        gameObjectsField = new RSField(this, "ao", this.reference);
+        Object[] gameObjectCache = (Object[]) gameObjectsField.getValue();
+        if (gameObjectCache != null)
+        {
+            GameObject[] gameObjects = new GameObject[gameObjectCache.length];
+            int i = 0;
+            for (Object o : gameObjectCache)
+            {
+                GameObject go = new GameObject();
+                go.reference = o;
+                gameObjects[i] = go;
+                i++;
+            }
+            return gameObjects;
+        }
+        else return null;
+    }
+
+    public int getX() {
+        xField = new RSField(this, "ag", this.reference);
+        int i = (int) xField.getValue();
+        i *= -965266879;
+        return i;
+    }
+
+    public int getY() {
+        yField = new RSField(this, "am", this.reference);
+        int i = (int) yField.getValue();
+        i *= 764437761;
+        return i;
     }
 
     public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
+        planeField = new RSField(this, "ah", this.reference);
+        int i = (int) planeField.getValue();
+        i *= 1397422987;
+        return i ;
     }
 }

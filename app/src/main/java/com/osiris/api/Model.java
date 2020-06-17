@@ -20,30 +20,21 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.osiris.api;
 
 import com.osiris.api.model.RSClass;
-import com.osiris.api.model.RSField;
+import com.osiris.api.model.RSMethod;
 
-public class Player extends RSClass {
-    private RSField username;
+public class Model extends RSClass {
+    private RSMethod faceAlphas;
 
-    Player() {
+    Model() {
         try {
-            rsClass = Class.forName("hu");
+            rsClass = Class.forName("ci");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
-    }
-
-    public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
+    public byte[] getFaceAlphas() {
+        faceAlphas = new RSMethod(this, "ae", this.reference);
+        return (byte[]) faceAlphas.getValue();
     }
 }

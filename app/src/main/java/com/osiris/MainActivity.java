@@ -27,8 +27,11 @@ import android.widget.Toast;
 
 import com.jagex.oldscape.android.AndroidLauncher;
 import com.osiris.api.Client;
+import com.osiris.api.GameObject;
 import com.osiris.api.Player;
 import com.osiris.api.Statics;
+import com.osiris.api.Statics1;
+import com.osiris.api.Tile;
 
 /*
     This class handles loading OSRS as well as initializing any of our added features.
@@ -63,15 +66,38 @@ public class MainActivity extends Activity {
                     Thread.sleep(5000);
 
                     Statics statics = new Statics();
-                    Player localPlayer = statics.getLocalPlayer();
-                    if (localPlayer.reference == null) {
+
+                    Client.localPlayer = statics.getLocalPlayer();
+                    if (Client.localPlayer.reference == null) {
                         username = "LocalPlayer Null";
                     } else {
-                        if (localPlayer.getUsername().reference == null) {
+                        if (Client.localPlayer.getUsername().reference == null) {
                             username = "Username Null";
                         } else {
-                            username = localPlayer.getUsername().getName();
+                            username = Client.localPlayer.getUsername().getName();
                         }
+                    }
+
+                    if (Client.localPlayer.reference != null)
+                    {
+                        Statics1 statics1 = new Statics1();
+
+                        for (Tile t : statics1.getScene().getTiles())
+                            for (GameObject go : t.getGameObjects())
+                            {
+                                if (go.reference != null)
+                                 if (go.getID() == 14413)
+                                 {
+                                     if (go.getEntity().reference !=null)
+                                     {
+                                         if (go.getEntity().getModel() !=null)
+                                         if (go.getEntity().getModel().reference != null)
+                                         {
+                                             Log.e("Model", "GOT THE MODEL!");
+                                         }
+                                     }
+                                 }
+                            }
                     }
 
                     Log.e(this.getClass().getName(), "LocalPlayer: " + username);

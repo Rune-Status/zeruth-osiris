@@ -22,28 +22,22 @@ package com.osiris.api;
 import com.osiris.api.model.RSClass;
 import com.osiris.api.model.RSField;
 
-public class Player extends RSClass {
-    private RSField username;
+public class Statics1 extends RSClass {
+    private RSField sceneField;
 
-    Player() {
+    public Statics1() {
         try {
-            rsClass = Class.forName("hu");
+            rsClass = Class.forName("bd");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public Username getUsername() {
-        username = new RSField(this, "ar", this.reference);
-        Username username = new Username();
-        username.reference = this.username.getValue();
-        return username;
+    public Scene getScene() {
+        sceneField = new RSField(this, "gm", rsClass);
+        Scene scene = new Scene();
+        scene.reference = sceneField.getValue();
+        return scene;
     }
 
-    public int getPlane() {
-        int mult = -412076763;
-        RSField test = new RSField(this, "ab", this.reference);
-        int i = (int) test.getValue();
-        return i / mult;
-    }
 }
