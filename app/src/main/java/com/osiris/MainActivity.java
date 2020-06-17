@@ -116,7 +116,6 @@ public class MainActivity extends Activity {
                                             {
                                                 if (go.getEntity().getModel().reference != null)
                                                 {
-                                                    StringBuilder s = new StringBuilder();
                                                     byte[] alphas = go.getEntity().getModel().getFaceAlphas();
                                                     int i = 0;
                                                     byte[] newAlphas = new byte[alphas.length];
@@ -132,17 +131,14 @@ public class MainActivity extends Activity {
                                             {
                                                 if (go.getEntity().getModel().reference != null)
                                                 {
-                                                    StringBuilder s = new StringBuilder();
                                                     int[] alphas = go.getEntity().getModel().getFaceColors();
                                                     int i = 0;
                                                     int[] newAlphas = new int[alphas.length];
                                                     for (int b : alphas)
                                                     {
-                                                        s.append(b).append(":");
                                                         newAlphas[i] = 86; // white
                                                         i++;
                                                     }
-                                                    Log.e("Colors", s.toString());
                                                     go.getEntity().getModel().setFaceColors(newAlphas);
                                                 }
                                             }
