@@ -80,36 +80,6 @@ public class MainActivity extends Activity {
                         }
                     }
 
-                    if (Client.localPlayer.reference != null)
-                    {
-                        Statics1 statics1 = new Statics1();
-
-                        for (Tile t : statics1.getScene().getTiles())
-                            for (GameObject go : t.getGameObjects())
-                            {
-                                if (go.reference != null)
-                                 if (go.getID() == 14413)
-                                 {
-                                     if (go.getEntity().reference !=null)
-                                     {
-                                         if (go.getEntity().getModel().reference != null)
-                                         {
-                                             StringBuilder s = new StringBuilder();
-                                             byte[] alphas = go.getEntity().getModel().getFaceAlphas();
-                                             int i = alphas.length;
-                                             byte[] newAlphas = new byte[]{0,0,0,0,0,0,0,0,0,0,0,0};
-                                             for (byte b :  alphas)
-                                             {
-                                                s.append(b).append(":");
-                                             }
-                                             go.getEntity().getModel().setFaceAlphas(newAlphas);
-                                             Log.e("Model", s.toString());
-                                         }
-                                     }
-                                 }
-                            }
-                    }
-
                     Log.e(this.getClass().getName(), "LocalPlayer: " + username);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -117,10 +87,77 @@ public class MainActivity extends Activity {
             }
         });
 
-        boolean debugReflection = true;
+        Thread clickBoxes = new Thread(() -> {
+            Log.d(this.getClass().getName(), "Starting clickboxes thread (50ms tick)"); // cycle is high so less likely to miss updating.
+            while (true) {
+                try {
+                    Thread.sleep(50);
+                    Statics statics = new Statics();
+                    Client.localPlayer = statics.getLocalPlayer();
 
-        if (debugReflection)
+                    if (Client.localPlayer.reference != null)
+                    {
+                        Statics1 statics1 = new Statics1();
+                        for (Tile t : statics1.getScene().getTiles())
+                            for (GameObject go : t.getGameObjects())
+                            {
+                                if (go.reference != null)
+                                    switch (go.getID())
+                                    {
+                                        // Lumby rooftop example
+                                        case 14413:
+                                        case 14414:
+                                        case 14833:
+                                        case 14834:
+                                        case 14835:
+                                        case 14836:
+                                        case 14841:
+                                            if (go.getEntity().reference !=null)
+                                            {
+                                                if (go.getEntity().getModel().reference != null)
+                                                {
+                                                    StringBuilder s = new StringBuilder();
+                                                    byte[] alphas = go.getEntity().getModel().getFaceAlphas();
+                                                    int i = 0;
+                                                    byte[] newAlphas = new byte[alphas.length];
+                                                    for (byte b : alphas)
+                                                    {
+                                                        newAlphas[i] = 0; // 0 = opaque, -2 = transparent
+                                                        i++;
+                                                    }
+                                                    go.getEntity().getModel().setFaceAlphas(newAlphas);
+                                                }
+                                            }
+                                            if (go.getEntity().reference !=null)
+                                            {
+                                                if (go.getEntity().getModel().reference != null)
+                                                {
+                                                    StringBuilder s = new StringBuilder();
+                                                    int[] alphas = go.getEntity().getModel().getFaceColors();
+                                                    int i = 0;
+                                                    int[] newAlphas = new int[alphas.length];
+                                                    for (int b : alphas)
+                                                    {
+                                                        s.append(b).append(":");
+                                                        newAlphas[i] = 86; // white
+                                                        i++;
+                                                    }
+                                                    Log.e("Colors", s.toString());
+                                                    go.getEntity().getModel().setFaceColors(newAlphas);
+                                                }
+                                            }
+                                            break;
+                                    }
+                            }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         debug.start();
+        clickBoxes.start();
 
         Toast.makeText(this,
                 "Welcome to OSiris!", Toast.LENGTH_LONG).show();

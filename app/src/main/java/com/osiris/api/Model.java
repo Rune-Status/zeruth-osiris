@@ -25,6 +25,7 @@ import com.osiris.api.model.RSMethod;
 
 public class Model extends RSClass {
     private RSField faceAlphas;
+    private RSField faceColors;
 
     Model() {
         try {
@@ -42,5 +43,15 @@ public class Model extends RSClass {
     public void setFaceAlphas(byte[] alphas) {
         faceAlphas = new RSField(this, "ae", this.reference);
         faceAlphas.setValue(alphas);
+    }
+
+    public int[] getFaceColors() {
+        faceColors = new RSField(this, "au", this.reference);
+        return (int[]) faceColors.getValue();
+    }
+
+    public void setFaceColors(int[] alphas) {
+        faceColors = new RSField(this, "au", this.reference);
+        faceColors.setValue(alphas);
     }
 }
