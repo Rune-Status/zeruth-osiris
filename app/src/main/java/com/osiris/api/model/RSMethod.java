@@ -33,12 +33,8 @@ public class RSMethod {
     public RSMethod(RSClass parentClass, String method, Object reference) {
         try {
             this.parentClass = parentClass;
-            this.method = ((Class)(parentClass.rsClass)).getDeclaredMethod(method, (Class)(parentClass.rsClass));
+            this.method = ((Class)(parentClass.rsClass)).getDeclaredMethod(method);
             this.reference = reference;
-            for (Method m : ((Class)(parentClass.rsClass)).getDeclaredMethods())
-            {
-                Log.e("methods", m.getName());
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

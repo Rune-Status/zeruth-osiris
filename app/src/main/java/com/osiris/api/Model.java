@@ -20,10 +20,11 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.osiris.api;
 
 import com.osiris.api.model.RSClass;
+import com.osiris.api.model.RSField;
 import com.osiris.api.model.RSMethod;
 
 public class Model extends RSClass {
-    private RSMethod faceAlphas;
+    private RSField faceAlphas;
 
     Model() {
         try {
@@ -34,7 +35,12 @@ public class Model extends RSClass {
     }
 
     public byte[] getFaceAlphas() {
-        faceAlphas = new RSMethod(this, "ae", this.reference);
+        faceAlphas = new RSField(this, "ae", this.reference);
         return (byte[]) faceAlphas.getValue();
+    }
+
+    public void setFaceAlphas(byte[] alphas) {
+        faceAlphas = new RSField(this, "ae", this.reference);
+        faceAlphas.setValue(alphas);
     }
 }

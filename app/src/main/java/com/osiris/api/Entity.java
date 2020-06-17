@@ -40,32 +40,8 @@ public class Entity extends RSClass {
     }
 
     public Model getModel() {
-        for (Method m : ((Class)(rsClass)).getDeclaredMethods())
-        {
-            if (m.getName().equals("ab")
-                    || m.getName().equals("dd")
-                    || m.getName().equals("de")
-                    || m.getName().equals("dh")
-                    || m.getName().equals("dt"))
-            {
-                try {
-                    Model mm = new Model();
-                    mm.reference = m.invoke(reference);
-                    if (mm.reference !=null)
-                        Log.e("SUCCESS", "NOT NULL");
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
-            }
-            Log.e("methods", m.getName());
-        }
-
         Model model = new Model();
         getModel = new RSMethod(this, "ab", this.reference);
-        if (getModel.method == null)
-            return null;
         model.reference = getModel.getValue();
         return model;
     }

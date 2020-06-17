@@ -41,6 +41,8 @@ import com.osiris.api.Tile;
  */
 public class MainActivity extends Activity {
 
+    private boolean changedAlphas = false;
+
     public Client client;
 
     @Override
@@ -90,10 +92,18 @@ public class MainActivity extends Activity {
                                  {
                                      if (go.getEntity().reference !=null)
                                      {
-                                         if (go.getEntity().getModel() !=null)
                                          if (go.getEntity().getModel().reference != null)
                                          {
-                                             Log.e("Model", "GOT THE MODEL!");
+                                             StringBuilder s = new StringBuilder();
+                                             byte[] alphas = go.getEntity().getModel().getFaceAlphas();
+                                             int i = alphas.length;
+                                             byte[] newAlphas = new byte[]{0,0,0,0,0,0,0,0,0,0,0,0};
+                                             for (byte b :  alphas)
+                                             {
+                                                s.append(b).append(":");
+                                             }
+                                             go.getEntity().getModel().setFaceAlphas(newAlphas);
+                                             Log.e("Model", s.toString());
                                          }
                                      }
                                  }

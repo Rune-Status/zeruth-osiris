@@ -49,4 +49,15 @@ public class RSField {
         }
         throw new RuntimeException("Failed to access Class:" + parentClass.className + " Field:" + field.getName());
     }
+
+    public void setValue(Object value) {
+        try {
+            field.setAccessible(true);
+            field.set(reference, value);
+            field.setAccessible(false);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to access Class:" + parentClass.className + " Field:" + field.getName());
+        }
+    }
 }
